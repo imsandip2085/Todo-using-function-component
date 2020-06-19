@@ -12,6 +12,7 @@ function FormSubmit () {
      e.preventDefault();
      if(!title == ""){
        let todo= {
+         id : Math.random(),
          todo:title,
          completed:false
        }
@@ -37,31 +38,19 @@ function FormSubmit () {
 
 const handleChecked = (id, name, checkedValues) =>{
     let todoItems = filterTodoItemList.map(val => {
-      if (val.todo === name) {
+      if (val.id === id) {
         val.completed = !val.completed ;
       }
       return val
     });
     setTodoItem(todoItems)
     setFilterTodoItemList(todoItems)
-    
-
-    // setTodoItem(todoItems)
-
-    // let filterTodoItemLists = filterTodoItemList.map(val => {
-    //   if (val.todo === name) {
-    //     val.completed = !val.completed ;
-    //   }
-    //   return val
-    // });
 } 
 
 const handleClickCompleted = () =>{
 var completedListItems = todoItem.filter(function(val){
   return val.completed == true;
 })
-// console.log(completedListItems,"sssssssssssssssssssssssssssssssssssss");
-
 setFilterTodoItemList(completedListItems);
 }
 
@@ -72,12 +61,12 @@ const handleClickActiveList = () =>{
   setFilterTodoItemList(activeListItems);
   }
   
-  const handleClickAll = () =>{
+const handleClickAll = () =>{
     // var allTodoListItems = todoItem.map(function(val){
     //   return
     // })
-    setFilterTodoItemList(todoItem);
-  }
+  setFilterTodoItemList(todoItem);
+}
   
     return(
         <div className="todoForm">
@@ -96,10 +85,10 @@ const handleClickActiveList = () =>{
                       <input
                        checked={val.checked}
                        type="checkbox"
-                       id={key}
+                       id={val.id}
                        value={val.todo}
                        name="title"
-                       onClick={() => handleChecked(key, val.todo, val.completed)}
+                       onClick={() => handleChecked(val.id, val.todo, val.completed)}
                       />   
                       <p style={{ textDecoration: val.completed == true ? "line-through" : "" }}>{val.todo}</p>
                       <Button onClick={() => handleDeleteListItem(key)}>X</Button>
