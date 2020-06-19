@@ -6,7 +6,7 @@ function FormSubmit () {
    
     const [title, setTitle] = useState("")
     const [todoItem , setTodoItem] = useState([]);
-    const [filterTodoItemList , setFilterTodoItemList] = useState(JSON.parse(localStorage.getItem('user')));
+    const [filterTodoItemList , setFilterTodoItemList] = useState([]);
 
     localStorage.setItem('user', JSON.stringify(filterTodoItemList));
  const handleSubmit = e => {
@@ -82,7 +82,6 @@ const handleClickAll = () =>{
              </form>            
                {
                 JSON.parse(localStorage.getItem('user')).map((val, key) =>{
-                    console.log(val,"sasasasasasasasasasasasas")
                    return (
                     <div>
                       <input
