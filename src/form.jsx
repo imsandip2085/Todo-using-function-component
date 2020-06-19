@@ -6,8 +6,9 @@ function FormSubmit () {
    
     const [title, setTitle] = useState("")
     const [todoItem , setTodoItem] = useState([]);
-    const [filterTodoItemList , setFilterTodoItemList] = useState([]);
+    const [filterTodoItemList , setFilterTodoItemList] = useState(JSON.parse(localStorage.getItem('user')));
 
+    localStorage.setItem('user', JSON.stringify(filterTodoItemList));
  const handleSubmit = e => {
      e.preventDefault();
      if(!title == ""){
@@ -28,7 +29,6 @@ function FormSubmit () {
    setTodoItem(todoItems);
    let filterTodoItemLists = [...filterTodoItemList];
    filterTodoItemList.splice(id, 1);
-  //  setTodoItem(todoItems);
    setFilterTodoItemList(filterTodoItemList)
   }
 
@@ -43,29 +43,31 @@ const handleChecked = (id, name, checkedValues) =>{
       }
       return val
     });
+    localStorage.setItem('todoItemStorage', JSON.stringify(todoItems));
+
     setTodoItem(todoItems)
     setFilterTodoItemList(todoItems)
 } 
 
 const handleClickCompleted = () =>{
-var completedListItems = todoItem.filter(function(val){
+var completedListItems = JSON.parse(localStorage.getItem('todoItemStorage')).filter(function(val){
   return val.completed == true;
 })
+
 setFilterTodoItemList(completedListItems);
 }
 
 const handleClickActiveList = () =>{
-  var activeListItems = todoItem.filter(function(val){
+  
+  var activeListItems = JSON.parse(localStorage.getItem('todoItemStorage')).filter(function(val){
     return val.completed == false;
   })
   setFilterTodoItemList(activeListItems);
   }
   
 const handleClickAll = () =>{
-    // var allTodoListItems = todoItem.map(function(val){
-    //   return
-    // })
-  setFilterTodoItemList(todoItem);
+   
+  setFilterTodoItemList(JSON.parse(localStorage.getItem('todoItemStorage')));
 }
   
     return(
@@ -79,7 +81,8 @@ const handleClickAll = () =>{
                 </input>
              </form>            
                {
-                  filterTodoItemList.map((val, key) =>{
+                JSON.parse(localStorage.getItem('user')).map((val, key) =>{
+                    console.log(val,"sasasasasasasasasasasasas")
                    return (
                     <div>
                       <input
@@ -99,7 +102,6 @@ const handleClickAll = () =>{
                <Button type="submit" variant="outline-danger" onClick={() =>handleClickAll()}>All</Button>{''}
                <Button type="submit" variant="outline-danger" onClick={() =>handleClickActiveList()}>ActiveList</Button>{''}
                <Button type="submit" variant="outline-danger" onClick={() => handleClickCompleted()}>Completed</Button>
-
         </div>
     )
 }
