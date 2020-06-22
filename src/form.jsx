@@ -69,7 +69,8 @@ const handleClickAll = () =>{
    
   setFilterTodoItemList(JSON.parse(localStorage.getItem('todoItemStorage')));
 }
-  
+
+  // console.log( JSON.parse(localStorage.getItem('user')) == 0);
     return(
         <div className="todoForm">
              <h1>Todo App</h1>
@@ -80,8 +81,29 @@ const handleClickAll = () =>{
                    onChange={(event)=>handleChange(event)}>
                 </input>
              </form>            
-               {
-                JSON.parse(localStorage.getItem('user')).map((val, key) =>{
+               { 
+                (JSON.parse(localStorage.getItem('todoItemStorage')) == 0 ? 
+                todoItem.map((val, key) =>{
+                  console.log("AAAAAAAAAAAAA")
+                   return (
+                    <div>
+                      <input
+                       checked={val.checked}
+                       type="checkbox"
+                       id={val.id}
+                       value={val.todo}
+                       name="title"
+                       onClick={() => handleChecked(val.id, val.todo, val.completed)}
+                      />   
+                      <p style={{ textDecoration: val.completed == true ? "line-through" : "" }}>{val.todo}</p>
+                       <Button onClick={() => handleDeleteListItem(key)}>X</Button> 
+                    </div>
+                  )
+                  })  
+                  : 
+                   (JSON.parse(localStorage.getItem('user')) !== 0 ?
+                  JSON.parse(localStorage.getItem('user')).map((val, key) =>{
+                    console.log("eeeeeeee")
                    return (
                     <div>
                       <input
@@ -97,6 +119,27 @@ const handleClickAll = () =>{
                     </div>
                   )
                   }) 
+                  : 
+                  (JSON.parse(localStorage.getItem('user')) === 0 ?
+                  console.log("SSSSSSSSSS"):
+                  JSON.parse(localStorage.getItem('todoItemStorage')).map((val, key) =>{
+                    console.log("BBBBBBBBBBBBB")
+                   return (
+                    <div>
+                      <input
+                       checked={val.checked}
+                       type="checkbox"
+                       id={val.id}
+                       value={val.todo}
+                       name="title"
+                       onClick={() => handleChecked(val.id, val.todo, val.completed)}
+                      />   
+                      <p style={{ textDecoration: val.completed == true ? "line-through" : "" }}>{val.todo}</p>
+                      <Button onClick={() => handleDeleteListItem(key)}>X</Button>
+                    </div>
+                  )
+                  }) 
+                )))
                } 
                <Button type="submit" variant="outline-danger" onClick={() =>handleClickAll()}>All</Button>{''}
                <Button type="submit" variant="outline-danger" onClick={() =>handleClickActiveList()}>ActiveList</Button>{''}
