@@ -10,6 +10,8 @@
     "heroku": "^7.42.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
+    "react-date-picker": "^8.0.1",
+    "react-datepicker": "^3.0.0",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
   },
