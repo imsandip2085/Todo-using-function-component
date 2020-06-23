@@ -7,11 +7,9 @@ import DatePicker from 'react-date-picker';
 
 function FormSubmit () { 
   const [title, setTitle] = useState("")
-  // const [todoItem2 , setTodoItem2] = useState([]);
   const [todoItem , setTodoItem] = useState([]);
   const [buttonStatus, setButtonStatus] = useState('')
   const [date, setDate] = useState(new Date());
- 
 
  const handleSubmit = e => {
      e.preventDefault();
@@ -22,7 +20,6 @@ function FormSubmit () {
          completed:false,
          dates : date.toLocaleDateString() 
        }
-       console.log(todo.dates,"bbbbbbbbbbbbbbbbbbbbbbbb")
        setTodoItem([...todoItem, todo])
 
      }
@@ -61,8 +58,14 @@ const handleClickActiveList = () =>{
   
 const handleClickAll = () =>{ 
   setButtonStatus("all")
-
 }
+
+const handleAscSort = () =>{ 
+  setButtonStatus("asc")
+}
+ const handleDscSort = () =>{
+  setButtonStatus("dsc") 
+ }
 
 return(
         <div className="todoForm">
@@ -129,7 +132,8 @@ return(
                       })
                       :
                       (buttonStatus =="completed"  ? 
-                      todoItem.map((val, key) =>{
+                     (  
+                     todoItem.map((val, key) =>{
                        return (
                         val.completed === true ?
                         (
@@ -148,8 +152,45 @@ return(
                     </div>
                     ) : null
                   )
-                  }) 
-                     :
+                  }))
+                   :
+                    (buttonStatus =="asc"  ? 
+                   (  todoItem.sort((a, b) => Date.parse(new Date(a.dates.split("/").reverse().join("-"))) - Date.parse(new Date(b.dates.split("/").reverse().join("-")))).map((val, key) =>{
+                     return (
+                     <div  style={{ backgroundColor : '#66a3ff', marginTop: "10px"}}>
+                       <input
+                         checked={val.checked}
+                         type="checkbox"
+                         id={val.id}
+                          value={val.todo}
+                         name="title"
+                        onClick={() => handleChecked(val.id, val.todo, val.completed)}
+                        />   
+                       <p style={{ textDecoration: val.completed == true ? "line-through" : "" }}>{val.todo}</p>
+                       <p className="pl-3">{val.dates}</p> 
+                       <Button onClick={() => handleDeleteListItem(key)}>X</Button>
+                  </div>
+                )
+                }))
+                   :
+                   (buttonStatus =="dsc"  ? 
+                   (  todoItem.sort((a, b) => Date.parse(new Date(b.dates.split("/").reverse().join("-"))) - Date.parse(new Date(a.dates.split("/").reverse().join("-")))).map((val, key) =>{
+                     return (
+                     <div  style={{ backgroundColor : '#66a3ff', marginTop: "10px"}}>
+                       <input
+                         checked={val.checked}
+                         type="checkbox"
+                         id={val.id}
+                          value={val.todo}
+                         name="title"
+                        onClick={() => handleChecked(val.id, val.todo, val.completed)}
+                        />   
+                       <p style={{ textDecoration: val.completed == true ? "line-through" : "" }}>{val.todo}</p>
+                       <p className="pl-3">{val.dates}</p> 
+                       <Button onClick={() => handleDeleteListItem(key)}>X</Button>
+                  </div>
+                )
+                })) :
                         todoItem.map((val, key) =>{
                           return (
                            <div  style={{ backgroundColor : '#66a3ff', marginTop: "10px"}}>
@@ -170,12 +211,15 @@ return(
                        )
                   )
                   )
-                 
+                     )
+                    )
                }
                <div className="button">
                <Button type="submit" variant="outline-danger" onClick={() =>handleClickAll()}>All</Button>{''}
                <Button type="submit" variant="outline-danger" onClick={() =>handleClickActiveList()}>ActiveList</Button>{''}
-               <Button type="submit" variant="outline-danger" onClick={() => handleClickCompleted()}>Completed</Button>
+               <Button type="submit" variant="outline-danger" onClick={() => handleClickCompleted()}>Completed</Button>{''}
+               <Button type="submit" variant="outline-danger" onClick={() => handleAscSort()}>sorting list in asc</Button>{''}
+               <Button type="submit" variant="outline-danger" onClick={() => handleDscSort()}>sorting list in dsc</Button>
                 </div> 
         </div>
     )
