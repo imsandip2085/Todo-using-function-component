@@ -20,3 +20,14 @@ p{
   padding-left: 20px;
   padding-right: 20px;
 }
+.todo-form{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 50px;
+}
+.button{
+  padding-top: 20px;
+}
+.list-item{
+  padding-top: 20px;
+}

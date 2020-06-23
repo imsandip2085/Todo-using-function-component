@@ -19,8 +19,10 @@ function FormSubmit () {
        let todo= {
          id : Math.random(),
          todo:title,
-         completed:false
+         completed:false,
+         dates : date.toLocaleDateString() 
        }
+       console.log(todo.dates,"bbbbbbbbbbbbbbbbbbbbbbbb")
        setTodoItem([...todoItem, todo])
 
      }
@@ -64,26 +66,32 @@ const handleClickAll = () =>{
 
 return(
         <div className="todoForm">
-            <h1>Date Picker</h1>
-              <DatePicker
-                 value={date}
-                 onChange={date => setDate(date)}
-              />
              <h1>Todo App</h1>
-              <h3>{date.toLocaleDateString()}</h3>
-                <form onSubmit={handleSubmit}>
+                <div style={{backgroundColor:"white"}}>
+                <form onSubmit={handleSubmit} className="todo-form" >
+                  <label><p>TODO NAME :</p>
                   <input type="text" 
                      placeholder="Todo..." 
                      value={title} 
                      onChange={(event)=>handleChange(event)}>
-                  </input>
-                </form>  
+                  </input> <br />
+                  </label>
+                  <label><p>Date :</p>
+                  <DatePicker
+                    value={date}
+                    onChange={date => setDate(date)}
+                   />
+                   </label>
+                   <br />
+                   <input type="submit" value="Submit" />
+                </form>
+                </div>  
              {
                 ( 
                   buttonStatus =="all"  ? 
                 todoItem.map((val, key) =>{
                    return (
-                    <div>
+                    <div  style={{ backgroundColor : '#66a3ff', marginTop: "10px"}}>
                       <input
                        checked={val.checked}
                        type="checkbox"
@@ -93,6 +101,7 @@ return(
                        onClick={() => handleChecked(val.id, val.todo, val.completed)}
                       />   
                       <p style={{ textDecoration: val.completed == true ? "line-through" : "" }}>{val.todo}</p>
+                      <p className="pl-3">{val.dates}</p> 
                        <Button onClick={() => handleDeleteListItem(key)}>X</Button> 
                     </div>
                   )
@@ -102,7 +111,7 @@ return(
                         return (
                          val.completed === false ?
                          (
-                         <div>
+                         <div  style={{ backgroundColor : '#66a3ff', marginTop: "10px"}}>
                            <input
                             checked={val.checked}
                             type="checkbox"
@@ -112,6 +121,7 @@ return(
                             onClick={() => handleChecked(val.id, val.todo, val.completed)}
                            />   
                            <p style={{ textDecoration: val.completed == true ? "line-through" : "" }}>{val.todo}</p>
+                           <p className="pl-3">{val.dates}</p> 
                            <Button onClick={() => handleDeleteListItem(key)}>X</Button>
                          </div>
                          ): null
@@ -123,7 +133,7 @@ return(
                        return (
                         val.completed === true ?
                         (
-                       <div>
+                       <div  style={{ backgroundColor : '#66a3ff', marginTop: "10px"}}>
                          <input
                            checked={val.checked}
                            type="checkbox"
@@ -133,7 +143,8 @@ return(
                           onClick={() => handleChecked(val.id, val.todo, val.completed)}
                           />   
                          <p style={{ textDecoration: val.completed == true ? "line-through" : "" }}>{val.todo}</p>
-                         <Button onClick={() => handleDeleteListItem(key)}>X</Button> 
+                         <p className="pl-3">{val.dates}</p> 
+                         <Button onClick={() => handleDeleteListItem(key)}>X</Button>
                     </div>
                     ) : null
                   )
@@ -141,7 +152,7 @@ return(
                      :
                         todoItem.map((val, key) =>{
                           return (
-                           <div>
+                           <div  style={{ backgroundColor : '#66a3ff', marginTop: "10px"}}>
                              <input
                               checked={val.checked}
                               type="checkbox"
@@ -151,6 +162,7 @@ return(
                               onClick={() => handleChecked(val.id, val.todo, val.completed)}
                              />   
                              <p style={{ textDecoration: val.completed == true ? "line-through" : "" }}>{val.todo}</p>
+                             <p className="pl-3">{val.dates}</p> 
                              <Button onClick={() => handleDeleteListItem(key)}>X</Button>
                            </div>
                          )
@@ -159,10 +171,12 @@ return(
                   )
                   )
                  
-               } 
+               }
+               <div className="button">
                <Button type="submit" variant="outline-danger" onClick={() =>handleClickAll()}>All</Button>{''}
                <Button type="submit" variant="outline-danger" onClick={() =>handleClickActiveList()}>ActiveList</Button>{''}
                <Button type="submit" variant="outline-danger" onClick={() => handleClickCompleted()}>Completed</Button>
+                </div> 
         </div>
     )
 }
