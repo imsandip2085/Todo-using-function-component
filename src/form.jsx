@@ -12,7 +12,8 @@ import {
   CardContent,
   Card,
 } from "@material-ui/core";
-import { KeyboardDatePicker } from "@material-ui/pickers";
+// import { KeyboardDatePicker } from "@material-ui/pickers";
+// import { MuiPickersUtilsProvider, InlineDatePicker } from "material-ui-pickers";
 import { makeStyles } from "@material-ui/core/styles";
 
 function FormSubmit() {
@@ -27,9 +28,13 @@ function FormSubmit() {
         margin: theme.spacing(1),
       },
     },
-    // cards: {
-    //   minWidth: "25ch",
-    // },
+    title: {
+      flexGrow: 1,
+      // margin: theme.spacing(1),
+    },
+    cards: {
+      minHeight: "50vh",
+    },
   }));
 
   const classes = useStyles();
@@ -110,18 +115,9 @@ function FormSubmit() {
                 value={title}
                 onChange={(event) => handleChange(event)}
               />
-              <KeyboardDatePicker
-                margin="normal"
-                id="date-picker-dialog"
-                label="Date picker dialog"
-                format="MM/dd/yyyy"
-                value={date}
-                onChange={(date) => setDate(date)}
-                KeyboardButtonProps={{
-                  "aria-label": "change date",
-                }}
-              />
+              <lable className="pickers">
               <DatePicker value={date} onChange={(date) => setDate(date)} />
+              </lable>
               <Button
                 variant="contained"
                 color="secondary"
@@ -138,16 +134,11 @@ function FormSubmit() {
       {buttonStatus == "all"
         ? todoItem.map((val, key) => {
             return (
-              <div style={{ backgroundColor: "#66a3ff", marginTop: "10px" }}>
-                {/* <input
-                       checked={val.checked}
-                       type="checkbox"
-                       id={val.id}
-                       value={val.todo}
-                       name="title"
-                       onClick={() => handleChecked(val.id, val.todo, val.completed)}
-                      />    */}
+              <div >
+                <AppBar position="static">
+                <Toolbar>
                 <Checkbox
+                  className={classes.title}
                   checked={val.checked}
                   type="checkbox"
                   id={val.id}
@@ -156,31 +147,22 @@ function FormSubmit() {
                   onClick={() => handleChecked(val.id, val.todo, val.completed)}
                   inputProps={{ "aria-label": "checkbox with default color" }}
                 />
-                <p
-                  style={{
-                    textDecoration: val.completed == true ? "line-through" : "",
-                  }}
-                >
-                  {val.todo}
-                </p>
-                <p className="pl-3">{val.dates}</p>
-                <Button onClick={() => handleDeleteListItem(key)}>X</Button>
+                <Typography variant="h6" className={classes.title}  style={{ textDecoration: val.completed == true ? "line-through" : "", }}> {val.todo}</Typography>
+                <Typography variant="h6" className={classes.title}> {val.dates}</Typography>
+                <Button className={classes.title} onClick={() => handleDeleteListItem(key)}>X</Button>
+                </Toolbar>
+              </AppBar>
               </div>
             );
           })
         : buttonStatus == "activeList"
         ? todoItem.map((val, key) => {
             return val.completed === false ? (
-              <div style={{ backgroundColor: "#66a3ff", marginTop: "10px" }}>
-                {/* <input
-                            checked={val.checked}
-                            type="checkbox"
-                            id={val.id}
-                            value={val.todo}
-                            name="title"
-                            onClick={() => handleChecked(val.id, val.todo, val.completed)}
-                           />    */}
+              <div >
+               <AppBar position="static">
+                <Toolbar>
                 <Checkbox
+                  className={classes.title}
                   checked={val.checked}
                   type="checkbox"
                   id={val.id}
@@ -189,31 +171,22 @@ function FormSubmit() {
                   onClick={() => handleChecked(val.id, val.todo, val.completed)}
                   inputProps={{ "aria-label": "checkbox with default color" }}
                 />
-                <p
-                  style={{
-                    textDecoration: val.completed == true ? "line-through" : "",
-                  }}
-                >
-                  {val.todo}
-                </p>
-                <p className="pl-3">{val.dates}</p>
-                <Button onClick={() => handleDeleteListItem(key)}>X</Button>
-              </div>
+                <Typography variant="h6" className={classes.title}  style={{ textDecoration: val.completed == true ? "line-through" : "", }}> {val.todo}</Typography>
+                <Typography variant="h6" className={classes.title}> {val.dates}</Typography>
+                <Button className={classes.title} onClick={() => handleDeleteListItem(key)}>X</Button>
+                </Toolbar>
+              </AppBar>
+               </div>
             ) : null;
           })
         : buttonStatus == "completed"
         ? todoItem.map((val, key) => {
             return val.completed === true ? (
               <div style={{ backgroundColor: "#66a3ff", marginTop: "10px" }}>
-                {/* <input
-                           checked={val.checked}
-                           type="checkbox"
-                           id={val.id}
-                            value={val.todo}
-                           name="title"
-                          onClick={() => handleChecked(val.id, val.todo, val.completed)}
-                          />    */}
+                <AppBar position="static">
+                <Toolbar>
                 <Checkbox
+                  className={classes.title}
                   checked={val.checked}
                   type="checkbox"
                   id={val.id}
@@ -222,15 +195,11 @@ function FormSubmit() {
                   onClick={() => handleChecked(val.id, val.todo, val.completed)}
                   inputProps={{ "aria-label": "checkbox with default color" }}
                 />
-                <p
-                  style={{
-                    textDecoration: val.completed == true ? "line-through" : "",
-                  }}
-                >
-                  {val.todo}
-                </p>
-                <p className="pl-3">{val.dates}</p>
-                <Button onClick={() => handleDeleteListItem(key)}>X</Button>
+                <Typography variant="h6" className={classes.title}  style={{ textDecoration: val.completed == true ? "line-through" : "", }}> {val.todo}</Typography>
+                <Typography variant="h6" className={classes.title}> {val.dates}</Typography>
+                <Button className={classes.title} onClick={() => handleDeleteListItem(key)}>X</Button>
+                </Toolbar>
+              </AppBar>
               </div>
             ) : null;
           })
@@ -244,35 +213,23 @@ function FormSubmit() {
             .map((val, key) => {
               return (
                 <div style={{ backgroundColor: "#66a3ff", marginTop: "10px" }}>
-                  {/* <input
-                         checked={val.checked}
-                         type="checkbox"
-                         id={val.id}
-                          value={val.todo}
-                         name="title"
-                        onClick={() => handleChecked(val.id, val.todo, val.completed)}
-                        />    */}
-                  <Checkbox
-                    checked={val.checked}
-                    type="checkbox"
-                    id={val.id}
-                    value={val.todo}
-                    name="title"
-                    onClick={() =>
-                      handleChecked(val.id, val.todo, val.completed)
-                    }
-                    inputProps={{ "aria-label": "checkbox with default color" }}
-                  />
-                  <p
-                    style={{
-                      textDecoration:
-                        val.completed == true ? "line-through" : "",
-                    }}
-                  >
-                    {val.todo}
-                  </p>
-                  <p className="pl-3">{val.dates}</p>
-                  <Button onClick={() => handleDeleteListItem(key)}>X</Button>
+                  <AppBar position="static">
+                <Toolbar>
+                <Checkbox
+                  className={classes.title}
+                  checked={val.checked}
+                  type="checkbox"
+                  id={val.id}
+                  value={val.todo}
+                  name="title"
+                  onClick={() => handleChecked(val.id, val.todo, val.completed)}
+                  inputProps={{ "aria-label": "checkbox with default color" }}
+                />
+                <Typography variant="h6" className={classes.title}  style={{ textDecoration: val.completed == true ? "line-through" : "", }}> {val.todo}</Typography>
+                <Typography variant="h6" className={classes.title}> {val.dates}</Typography>
+                <Button className={classes.title} onClick={() => handleDeleteListItem(key)}>X</Button>
+                </Toolbar>
+              </AppBar>
                 </div>
               );
             })
@@ -286,50 +243,10 @@ function FormSubmit() {
             .map((val, key) => {
               return (
                 <div style={{ backgroundColor: "#66a3ff", marginTop: "10px" }}>
-                  {/* <input
-                         checked={val.checked}
-                         type="checkbox"
-                         id={val.id}
-                          value={val.todo}
-                         name="title"
-                        onClick={() => handleChecked(val.id, val.todo, val.completed)}
-                        />    */}
-                  <Checkbox
-                    checked={val.checked}
-                    type="checkbox"
-                    id={val.id}
-                    value={val.todo}
-                    name="title"
-                    onClick={() =>
-                      handleChecked(val.id, val.todo, val.completed)
-                    }
-                    inputProps={{ "aria-label": "checkbox with default color" }}
-                  />
-                  <p
-                    style={{
-                      textDecoration:
-                        val.completed == true ? "line-through" : "",
-                    }}
-                  >
-                    {val.todo}
-                  </p>
-                  <p className="pl-3">{val.dates}</p>
-                  <Button onClick={() => handleDeleteListItem(key)}>X</Button>
-                </div>
-              );
-            })
-        : todoItem.map((val, key) => {
-            return (
-              <div style={{ backgroundColor: "#66a3ff", marginTop: "10px" }}>
-                {/* <input
-                              checked={val.checked}
-                              type="checkbox"
-                              id={val.id}
-                              value={val.todo}
-                              name="title"
-                              onClick={() => handleChecked(val.id, val.todo, val.completed)}
-                             />    */}
+                <AppBar position="static">
+                <Toolbar>
                 <Checkbox
+                  className={classes.title}
                   checked={val.checked}
                   type="checkbox"
                   id={val.id}
@@ -338,15 +255,34 @@ function FormSubmit() {
                   onClick={() => handleChecked(val.id, val.todo, val.completed)}
                   inputProps={{ "aria-label": "checkbox with default color" }}
                 />
-                <p
-                  style={{
-                    textDecoration: val.completed == true ? "line-through" : "",
-                  }}
-                >
-                  {val.todo}
-                </p>
-                <p className="pl-3">{val.dates}</p>
-                <Button onClick={() => handleDeleteListItem(key)}>X</Button>
+                <Typography variant="h6" className={classes.title}  style={{ textDecoration: val.completed == true ? "line-through" : "", }}> {val.todo}</Typography>
+                <Typography variant="h6" className={classes.title}> {val.dates}</Typography>
+                <Button className={classes.title} onClick={() => handleDeleteListItem(key)}>X</Button>
+                </Toolbar>
+              </AppBar>
+                </div>
+              );
+            })
+        : todoItem.map((val, key) => {
+            return (
+              <div style={{ backgroundColor: "#66a3ff", marginTop: "10px" }}>
+              <AppBar position="static">
+                <Toolbar>
+                <Checkbox
+                  className={classes.title}
+                  checked={val.checked}
+                  type="checkbox"
+                  id={val.id}
+                  value={val.todo}
+                  name="title"
+                  onClick={() => handleChecked(val.id, val.todo, val.completed)}
+                  inputProps={{ "aria-label": "checkbox with default color" }}
+                />
+                <Typography variant="h6" className={classes.title}  style={{ textDecoration: val.completed == true ? "line-through" : "", }}> {val.todo}</Typography>
+                <Typography variant="h6" className={classes.title}> {val.dates}</Typography>
+                <Button  onClick={() => handleDeleteListItem(key)}  type="submit" size="small" variant="contained" color="secondary">Delete</Button>
+                </Toolbar>
+              </AppBar>
               </div>
             );
           })}
